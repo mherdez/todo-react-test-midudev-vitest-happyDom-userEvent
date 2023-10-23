@@ -1,33 +1,39 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { ChangeEvent, useState } from 'react';
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [valor, setValor] = useState<number>(0)
+  const [secuencia, setSecuencia] = useState<string>('')
+
+  const fibonacci = (n: number) => {
+    let a:number = 0;
+      let b:number = 1;
+      const sequence:number[] = [a, b];
+
+      for (let i = 2; i < n; i++) {
+        const next:number = a + b;
+        sequence.push(next);
+        a = b;
+        b = next;
+      }
+      setSecuencia(sequence.join(", "));
+
+  }
+
+  const setInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setValor(+e.target.value)
+  }
+  const calcular = () => {
+    fibonacci(valor)
+  }
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <h1>Hola mundo</h1>
+      <input type="number" min={0} max={20} onChange={setInput}/>
+      <button onClick={calcular}>Calcular</button>
+      <p>{secuencia}</p>
     </>
   )
 }
